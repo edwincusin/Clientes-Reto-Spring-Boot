@@ -1,15 +1,15 @@
 package com.krakedev.clientes.entidades;
 
-public class Clientes {
+public class Cliente {
 	private String cedula;
 	private String nombre;
 	private String apellido;
 	
-	public Clientes() {
+	public Cliente() {
 		//constructor vacio
 	}
 	//CONSTRUCTOR CON PARAMETROS
-	public Clientes(String cedula, String nombre, String apellido) {
+	public Cliente(String cedula, String nombre, String apellido) {
 		super();
 		this.cedula = cedula;
 		this.nombre = nombre;
