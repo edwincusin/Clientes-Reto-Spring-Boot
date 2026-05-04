@@ -3,9 +3,10 @@ package com.krakedev.clientes.services;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.krakedev.clientes.ClientesApplication;
-import com.krakedev.clientes.entidades.Cliente;
+import org.springframework.stereotype.Service;
 
+import com.krakedev.clientes.entidades.Cliente;
+@Service
 public class ServicioCliente {
 	private ArrayList<Cliente> clientes = new ArrayList<Cliente>();
 

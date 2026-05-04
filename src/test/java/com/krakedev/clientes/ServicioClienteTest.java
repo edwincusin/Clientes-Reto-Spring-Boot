@@ -157,7 +157,7 @@ class ServicioClienteTest {
         servicio.crear(new Cliente("123", "Juan", "Perez"));
 
         // Se elimina el cliente
-        boolean eliminado = servicio.Eliminar("123");
+        boolean eliminado = servicio.eliminar("123");
 
         // Se verifica que se eliminó correctamente
         assertTrue(eliminado);
@@ -169,7 +169,7 @@ class ServicioClienteTest {
     @Test
     void eliminarClienteNoExistente() {
         // Se intenta eliminar un cliente que no existe
-        boolean eliminado = servicio.Eliminar("999");
+        boolean eliminado = servicio.eliminar("999");
 
         // Se valida que la operación falló
         assertFalse(eliminado);

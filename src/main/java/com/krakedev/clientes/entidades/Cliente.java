@@ -4,42 +4,57 @@ public class Cliente {
 	private String cedula;
 	private String nombre;
 	private String apellido;
-	
+	private String email;
+
 	public Cliente() {
-		//constructor vacio
+		// constructor vacio
 	}
-	//CONSTRUCTOR CON PARAMETROS
-	public Cliente(String cedula, String nombre, String apellido) {
+
+	// CONSTRUCTOR CON PARAMETROS
+	public Cliente(String cedula, String nombre, String apellido, String email) {
 		super();
 		this.cedula = cedula;
 		this.nombre = nombre;
 		this.apellido = apellido;
+		this.email = email;
 	}
-	//METODOS GET Y SET
+
+	// METODOS GET Y SET
 	public String getCedula() {
 		return cedula;
 	}
+
 	public void setCedula(String cedula) {
 		this.cedula = cedula;
 	}
+
 	public String getNombre() {
 		return nombre;
 	}
+
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
+
 	public String getApellido() {
 		return apellido;
 	}
+
 	public void setApellido(String apellido) {
 		this.apellido = apellido;
 	}
-	//METODO SOBRE ESCCRITO DEL TO STRING 
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
 	@Override
 	public String toString() {
-		return "Clientes [cedula=" + cedula + ", nombre=" + nombre + ", apellido=" + apellido + "]";
+		return "Cliente [cedula=" + cedula + ", nombre=" + nombre + ", apellido=" + apellido + ", email=" + email + "]";
 	}
-	
-	
-	
+
 }
