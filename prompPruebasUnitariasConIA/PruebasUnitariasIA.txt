@@ -1,0 +1,81 @@
+Actúa como un experto en pruebas unitarias estoy trabajando con Spring Boot.
+Genera una clase de pruebas para el siguientes servicios:
+
+- buscarporCedula(String cedulaString)
+- crear(Cliente clienteNuevo)
+- List<Cliente> listar()
+- Cliente actualizar(String cedula,Cliente clienteActualizado)
+- Eliminar(String cedula)
+
+IMPORTANTE: 
+
+- Usa @Test
+- Usa assertEquals, assertNotNull, assertNull, assertTrue, assertFalse
+- Cubre todos los métodos: crear, buscarporCedula, listar, actualizar, eliminar
+- Incluye casos positivos y negativos
+- No uses base de datos, solo pruebas en memoria
+- Inicializa correctamente el servicio antes de cada prueba
+- Agregar comentarios de lo que hace cada caso y bien explicito
+
+Código:
+package com.krakedev.clientes.services;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import com.krakedev.clientes.ClientesApplication;
+import com.krakedev.clientes.entidades.Cliente;
+
+public class ServicioCliente {
+	private ArrayList<Cliente> clientes = new ArrayList<Cliente>();
+
+	// METODO CLIENTE
+	public Cliente buscarporCedula(String cedulaString) {
+
+		for (Cliente cliente : clientes) {
+			if (cliente.getCedula().equals(cedulaString)) {
+				return cliente;
+			}
+		}
+		return null;
+	}
+
+	// METODO CREAR CLIENTE : retornamo cliente creado
+	public Cliente crear(Cliente clienteNuevo) {
+		Cliente existente = buscarporCedula(clienteNuevo.getCedula());
+
+		if (existente == null) {
+			clientes.add(clienteNuevo);
+			return clienteNuevo;
+		}
+		return null;
+
+	}
+
+	// METODO LISTAR CLIENTES
+	public List<Cliente> listar() {
+		return clientes;
+	}
+
+	// METODO ACTUALIZAR : retornamos cliente actualizado
+	public Cliente actualizar(String cedula,Cliente clienteActualizado) {
+		Cliente cliente=buscarporCedula(cedula);	
+		if(cliente!=null) {
+			cliente.setNombre(clienteActualizado.getNombre());
+			cliente.setApellido(clienteActualizado.getApellido());
+		}
+		return cliente;
+	}
+	
+	//METODO ELIMINAR 
+	public boolean Eliminar(String cedula) {
+		Cliente clienteEliminar=buscarporCedula(cedula);
+		if (clienteEliminar!=null) {
+			return clientes.remove(clienteEliminar); // true
+		}
+		return false;
+		
+	}
+	
+	
+}

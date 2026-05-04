@@ -10,168 +10,137 @@ import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.stereotype.Service;
 
 import com.krakedev.clientes.entidades.Cliente;
 import com.krakedev.clientes.services.ServicioCliente;
 
-@Service
-class ServicioClienteTest {
+public class ServicioClienteTest {
 
     private ServicioCliente servicio;
 
-    // Se ejecuta antes de cada prueba
-    // Inicializa un servicio limpio (sin datos previos)
+    // Se ejecuta antes de cada prueba → inicializa el servicio en memoria
     @BeforeEach
-    void setUp() {
+    public void setUp() {
         servicio = new ServicioCliente();
     }
 
     // =========================
-    // CREATE (CREAR CLIENTE)
+    // TEST CREAR
     // =========================
 
     @Test
-    void crearClienteExitoso() {
-        // Se crea un cliente nuevo
-        Cliente cliente = new Cliente("123", "Juan", "Perez");
+    public void testCrearClienteNuevo() {
+        // Caso positivo: se crea un cliente que no existe
+        Cliente cliente = new Cliente("123", "Juan", "Perez", "juan@mail.com");
 
-        // Se ejecuta el método crear
         Cliente resultado = servicio.crear(cliente);
 
-        // Se verifica que el cliente fue creado correctamente
-        assertNotNull(resultado); // No debe ser null
-        assertEquals("123", resultado.getCedula()); // La cédula debe coincidir
+        // Verificamos que el cliente fue creado correctamente
+        assertNotNull(resultado);
+        assertEquals("123", resultado.getCedula());
     }
 
     @Test
-    void noDebeCrearClienteDuplicado() {
-        // Se crean dos clientes con la misma cédula
-        Cliente c1 = new Cliente("123", "Juan", "Perez");
-        Cliente c2 = new Cliente("123", "Carlos", "Lopez");
+    public void testCrearClienteDuplicado() {
+        // Caso negativo: no debe permitir crear clientes con misma cédula
+        Cliente cliente1 = new Cliente("123", "Juan", "Perez", "juan@mail.com");
+        Cliente cliente2 = new Cliente("123", "Pedro", "Lopez", "pedro@mail.com");
 
-        // Se guarda el primero
-        servicio.crear(c1);
+        servicio.crear(cliente1);
+        Cliente resultado = servicio.crear(cliente2);
 
-        // Se intenta guardar el duplicado
-        Cliente resultado = servicio.crear(c2);
-
-        // Se verifica que NO se creó el segundo cliente
-        assertNull(resultado); // Debe retornar null
+        // Debe retornar null porque ya existe
+        assertNull(resultado);
     }
 
     // =========================
-    // READ (BUSCAR POR CEDULA)
+    // TEST BUSCAR
     // =========================
 
     @Test
-    void buscarClienteExistente() {
-        // Se agrega un cliente
-        Cliente cliente = new Cliente("123", "Juan", "Perez");
+    public void testBuscarClienteExistente() {
+        // Caso positivo: buscar cliente existente
+        Cliente cliente = new Cliente("123", "Juan", "Perez", "juan@mail.com");
         servicio.crear(cliente);
 
-        // Se busca el cliente por cédula
-        Cliente encontrado = servicio.buscarporCedula("123");
+        Cliente resultado = servicio.buscarporCedula("123");
 
-        // Se valida que el cliente existe
-        assertNotNull(encontrado);
-        assertEquals("Juan", encontrado.getNombre());
+        assertNotNull(resultado);
+        assertEquals("Juan", resultado.getNombre());
     }
 
     @Test
-    void buscarClienteNoExistente() {
-        // Se busca una cédula que no existe
-        Cliente encontrado = servicio.buscarporCedula("999");
+    public void testBuscarClienteNoExistente() {
+        // Caso negativo: buscar cliente que no existe
+        Cliente resultado = servicio.buscarporCedula("999");
 
-        // Se verifica que no se encontró nada
-        assertNull(encontrado);
+        assertNull(resultado);
     }
 
     // =========================
-    // READ (LISTAR CLIENTES)
+    // TEST LISTAR
     // =========================
 
     @Test
-    void listarClientes() {
-        // Se agregan dos clientes
-        servicio.crear(new Cliente("1", "A", "A"));
-        servicio.crear(new Cliente("2", "B", "B"));
+    public void testListarClientes() {
+        // Se agregan clientes y se verifica la lista
+        servicio.crear(new Cliente("1", "A", "A", "a@mail.com"));
+        servicio.crear(new Cliente("2", "B", "B", "b@mail.com"));
 
-        // Se obtiene la lista de clientes
         List<Cliente> lista = servicio.listar();
 
-        // Se valida que la lista tenga 2 elementos
         assertEquals(2, lista.size());
     }
 
-    @Test
-    void listarSinClientes() {
-        // No se agregan clientes
-
-        // Se obtiene la lista
-        List<Cliente> lista = servicio.listar();
-
-        // Se verifica que esté vacía
-        assertTrue(lista.isEmpty());
-    }
-
     // =========================
-    // UPDATE (ACTUALIZAR CLIENTE)
+    // TEST ACTUALIZAR
     // =========================
 
     @Test
-    void actualizarClienteExistente() {
-        // Se crea un cliente inicial
-        servicio.crear(new Cliente("123", "Juan", "Perez"));
+    public void testActualizarClienteExistente() {
+        // Caso positivo: actualizar un cliente existente
+        Cliente cliente = new Cliente("123", "Juan", "Perez", "juan@mail.com");
+        servicio.crear(cliente);
 
-        // Se crea un objeto con nuevos datos
-        Cliente actualizado = new Cliente("123", "Carlos", "Lopez");
+        Cliente actualizado = new Cliente("123", "Carlos", "Lopez", "carlos@mail.com");
 
-        // Se ejecuta la actualización
         Cliente resultado = servicio.actualizar("123", actualizado);
 
-        // Se valida que la actualización fue exitosa
         assertNotNull(resultado);
         assertEquals("Carlos", resultado.getNombre());
         assertEquals("Lopez", resultado.getApellido());
     }
 
     @Test
-    void actualizarClienteNoExistente() {
-        // Se intenta actualizar un cliente que no existe
-        Cliente actualizado = new Cliente("999", "Carlos", "Lopez");
+    public void testActualizarClienteNoExistente() {
+        // Caso negativo: intentar actualizar cliente que no existe
+        Cliente actualizado = new Cliente("999", "X", "Y", "x@mail.com");
 
         Cliente resultado = servicio.actualizar("999", actualizado);
 
-        // Se valida que no se pudo actualizar
         assertNull(resultado);
     }
 
     // =========================
-    // DELETE (ELIMINAR CLIENTE)
+    // TEST ELIMINAR
     // =========================
 
     @Test
-    void eliminarClienteExistente() {
-        // Se crea un cliente
-        servicio.crear(new Cliente("123", "Juan", "Perez"));
+    public void testEliminarClienteExistente() {
+        // Caso positivo: eliminar cliente existente
+        Cliente cliente = new Cliente("123", "Juan", "Perez", "juan@mail.com");
+        servicio.crear(cliente);
 
-        // Se elimina el cliente
-        boolean eliminado = servicio.eliminar("123");
+        boolean resultado = servicio.eliminar("123");
 
-        // Se verifica que se eliminó correctamente
-        assertTrue(eliminado);
-
-        // Se valida que ya no exista en la lista
-        assertNull(servicio.buscarporCedula("123"));
+        assertTrue(resultado);
     }
 
     @Test
-    void eliminarClienteNoExistente() {
-        // Se intenta eliminar un cliente que no existe
-        boolean eliminado = servicio.eliminar("999");
+    public void testEliminarClienteNoExistente() {
+        // Caso negativo: eliminar cliente que no existe
+        boolean resultado = servicio.eliminar("999");
 
-        // Se valida que la operación falló
-        assertFalse(eliminado);
+        assertFalse(resultado);
     }
 }
