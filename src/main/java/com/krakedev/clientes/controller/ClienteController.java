@@ -17,7 +17,7 @@ import com.krakedev.clientes.services.ServicioCliente;
 @RestController
 @RequestMapping("/clientes")
 public class ClienteController {
-
+/*
 	// Servicio inyectado por Spring para gestionar la lógica de clientes
 	private final ServicioCliente servicioCliente;
 	
@@ -56,5 +56,5 @@ public class ClienteController {
 	public boolean eliminar(@PathVariable String cedula) {
 		return servicioCliente.eliminar(cedula);
 	}
-
+*/
 }

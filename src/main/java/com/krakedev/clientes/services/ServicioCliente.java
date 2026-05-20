@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 import com.krakedev.clientes.entidades.Cliente;
 @Service
 public class ServicioCliente {
+	
+	/*
 	private ArrayList<Cliente> clientes = new ArrayList<Cliente>();
 
 	// METODO CLIENTE
@@ -58,6 +60,6 @@ public class ServicioCliente {
 		return false;
 		
 	}
-	
+	*/
 	
 }
