@@ -44,6 +44,7 @@ public class ClienteJdbc {
 			
 		} catch (Exception e) {
 			log.error("ERROR AL INSERTAR " +e);
+			throw new RuntimeException("ERROR AL INSERTAR"+e.getMessage());
 		}finally {
 			try {
 				con.close();
@@ -81,6 +82,7 @@ public class ClienteJdbc {
 			
 		} catch (Exception e) {
 			log.error("ERROR AL LISTAR " +e);
+			throw new RuntimeException("ERROR AL LISTAR R"+e.getMessage());
 		}finally {
 			try {
 				con.close();
@@ -119,6 +121,7 @@ public class ClienteJdbc {
 			
 		} catch (Exception e) {
 			log.error("ERROR AL CONSULTAR POR CEDULA " +e);
+			throw new RuntimeException("ERROR AL CONSULTAR POR CEDULA"+e.getMessage());
 		}finally {
 			try {
 				con.close();
@@ -163,6 +166,7 @@ public class ClienteJdbc {
 			
 		} catch (Exception e) {
 			log.error("ERROR AL ACTUALIZAR POR CEDULA " +e);
+			throw new RuntimeException("ERROR AL ACTUALIZAR POR CEDULA "+e.getMessage());
 		}finally {
 			try {
 				con.close();
@@ -200,7 +204,8 @@ public class ClienteJdbc {
 			
 		} catch (Exception e) {
 			log.error("ERROR AL ELIMINAR POR CEDULA " +e);
-			return false;
+			throw new RuntimeException("ERROR AL ELIMINAR POR CEDULA"+e.getMessage());
+			
 		}finally {
 			try {
 				con.close();

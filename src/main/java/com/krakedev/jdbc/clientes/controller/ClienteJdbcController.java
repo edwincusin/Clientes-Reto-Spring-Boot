@@ -12,11 +12,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.krakedev.clientes.entidades.Cliente;
-import com.krakedev.clientes.services.ServicioCliente;
 import com.krakedev.jdbc.clientes.services.ServicioClienteJdbc;
 
 @RestController
-@RequestMapping("/clientes")
+@RequestMapping("/jdbc/clientes")
 public class ClienteJdbcController {
 	
 	private final ServicioClienteJdbc servicioCliente;	
